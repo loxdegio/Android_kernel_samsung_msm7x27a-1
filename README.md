@@ -1,7 +1,5 @@
-Android-SpeedKernel-3.0.101
+android linux-3.0.101-DirtyDevs
 ==============
 Android kernel 3.0.101 for samsung galaxy Ace Plus (GT-S7500)
 
-http://www.androidiani.com/forum/samsung-galaxy-ace-plus-modding/299846-rom-speed-mod.html
-
-http://forum.xda-developers.com/showthread.php?t=2622857
+http://www.androidiani.com/forum/samsung-galaxy-ace-plus-modding/445240-rom-dirtydev-4-4-4-cm11.html

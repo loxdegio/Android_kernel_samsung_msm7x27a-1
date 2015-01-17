@@ -70,7 +70,7 @@ boolean mdp_is_in_isr = FALSE;
 
 struct vsync vsync_cntrl;
 
-#if defined(CONFIG_MACH_JENA)
+#if defined(CONFIG_MACH_TREBON)
 /* Add a global flag to indicate supporting of the feature:
    continuous display from app bootloader to kernel/android
 */

@@ -1764,19 +1764,13 @@ static void msm_pm_restart(char str, const char *cmd)
 	} else {
 		printk(KERN_EMERG "smem_flag is NULL\n");
 	}
-
-#if !defined(CONFIG_MACH_JENA)
+	
 	msm_rpcrouter_close();
-#endif
 
 #if defined(CONFIG_SEC_DEBUG) && defined(CONFIG_SEC_MISC)
 	sec_get_param(param_power_off_reason, &power_off_reason);
 	power_off_reason = power_off_reason | 0x10;
 	sec_set_param(param_power_off_reason, &power_off_reason);
-#endif
-
-#if defined(CONFIG_MACH_JENA)
-	msm_rpcrouter_close();
 #endif
 
 	msm_proc_comm(PCOM_RESET_CHIP_IMM, &restart_reason, 0);

@@ -56,14 +56,14 @@ static long no_blink(int state)
 long (*panic_blink)(int state);
 EXPORT_SYMBOL(panic_blink);
 
-#if defined(CONFIG_MACH_TREBON) || defined(CONFIG_MACH_GEIM) || defined(CONFIG_MACH_JENA)
+#if defined(CONFIG_MACH_TREBON)
 #include "../arch/arm/mach-msm/smd_private.h"
 #include "../arch/arm/mach-msm/proc_comm.h"
 #include <mach/msm_iomap-7xxx.h>
 #include <mach/msm_iomap.h>
 #include <asm/io.h>
-
 #endif
+
 /**
  *	panic - halt the system
  *	@fmt: The text string to print

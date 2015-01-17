@@ -31,6 +31,8 @@
 #include <mach/vreg.h>
 #include <linux/io.h>
 
+#include <media/lux.h>
+
 #define SENSOR_DEBUG 0
 
 #undef CONFIG_LOAD_FILE
@@ -1102,7 +1104,7 @@ static int s5k4ecgx_factory_flash(int lux_val)
 	if (lux_val == 0) {
 		gpio_set_value_cansleep(CAM_FLASH_ENSET, 0);
 		return 0;
-		}
+	}
 
 	/* initailize falsh IC */
 	gpio_set_value_cansleep(CAM_FLASH_ENSET, 0);
@@ -1145,7 +1147,7 @@ static int s5k4ecgx_factory_flash(int lux_val)
 
 
 static int s5k4ecgx_set_flash(int lux_val)
-{				/* yjh_flash */
+{				/* yjh_flash */	
 	if (torch_mode_on)
 		return 0;
 
@@ -1272,6 +1274,9 @@ int s5k4ecgx_set_af(char value)
 	int val = 0, ret = 0;
 	static int pre_flash_on;	/* yjh_flash */
 	/*CAMDRV_DEBUG("%s : %d\n", __func__, value); */
+	
+	ext_lux_val = s5k4ecgx_get_lux(&s5k4ecgx_status.current_lux);
+	
 	switch (value) {
 	case EXT_CFG_AF_CHECK_STATUS:
 		s5k4ecgx_sensor_write(0x002C, 0x7000);
@@ -1439,7 +1444,7 @@ int s5k4ecgx_set_af(char value)
 		break;
 	case EXT_CFG_AF_SET_AE_FOR_FLASH:	/* yjh_flash */
 		CAMDRV_DEBUG("%s : EXT_CFG_AF_SET_AE_FOR_FLASH\n", __func__);
-		s5k4ecgx_get_lux(&s5k4ecgx_status.current_lux);
+		ext_lux_val = s5k4ecgx_get_lux(&s5k4ecgx_status.current_lux);
 		if (s5k4ecgx_status.flash_mode != EXT_CFG_FLASH_OFF) {
 			CAMDRV_DEBUG("%s FLASH_1 **\n", __func__);
 			if (s5k4ecgx_status.flash_mode == EXT_CFG_FLASH_AUTO) {
@@ -1933,8 +1938,9 @@ void s5k4ecgx_set_capture(void)
 
 
 	/* Check current lux */
-	if (s5k4ecgx_status.flash_status == FLASH_OFF)
-		s5k4ecgx_get_lux(&s5k4ecgx_status.current_lux);
+	if (s5k4ecgx_status.flash_status == FLASH_OFF){
+		ext_lux_val = s5k4ecgx_get_lux(&s5k4ecgx_status.current_lux);
+	}
 
 	/* CASE 1 : Capture with no flash
 	   (System lag will be measured in this condition) */
@@ -2237,7 +2243,7 @@ ctrl_info.value_1 = s5k4ecgx_status.flash_exifinfo; */
 		} else if (ctrl_info.value_1 == EXT_CFG_FLASH_TURN_ON) {
 			pr_info("2ctrl_info.value_1 = %d\n", ctrl_info.value_1);
 			if (s5k4ecgx_status.flash_mode == EXT_CFG_FLASH_AUTO) {
-				s5k4ecgx_get_lux(&s5k4ecgx_status.current_lux);
+				ext_lux_val = s5k4ecgx_get_lux(&s5k4ecgx_status.current_lux);
 				if (s5k4ecgx_status.current_lux < 0x0032) {
 					s5k4ecgx_set_flash(MOVIE_FLASH);
 					flashOnFromApps = 1;
@@ -2644,7 +2650,7 @@ static int s5k4ecgx_i2c_probe(struct i2c_client *client,
 	if (device_create_file(s5k4ecgx_dev, &dev_attr_rear_flash) < 0) {
 		CDBG("failed to create device file, %s\n",
 		dev_attr_rear_flash.attr.name);
-		}
+	}
 #endif
 
 	/*pr_info("[S5K4ECGX]s5k4ecgx_probe succeeded!\n");*/

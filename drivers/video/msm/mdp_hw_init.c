@@ -13,7 +13,7 @@
 
 #include "mdp.h"
 
-#if defined(CONFIG_MACH_JENA)
+#if defined(CONFIG_MACH_TREBON)
 extern unsigned long mdp_timer_duration;
 extern boolean mdp_continues_display;
 #endif
@@ -592,7 +592,7 @@ static void mdp_load_lut_param(void)
 void mdp_hw_init(void)
 {
 	int i;
-#if defined(CONFIG_MACH_JENA)
+#if defined(CONFIG_MACH_TREBON)
 	mdp_timer_duration = (100 * HZ);   /* 100 sec */
 #endif
 
@@ -640,7 +640,7 @@ void mdp_hw_init(void)
 	MDP_OUTP(MDP_CMD_DEBUG_ACCESS_BASE + 0x01e4, 0);
 
 #ifndef CONFIG_FB_MSM_MDP22
-#if defined(CONFIG_MACH_JENA)
+#if defined(CONFIG_MACH_TREBON)
 /* skip the code to avoid LCDC is to be disable */
 if (!mdp_continues_display)
 #endif

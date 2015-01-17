@@ -389,8 +389,7 @@ static void gpio_keys_report_event(struct gpio_button_data *bdata)
 	bdata->key_state = !!state;
 		input_event(input, type, button->code, !!state);
 	input_sync(input);
-#if defined(CONFIG_MACH_TREBON) || defined(CONFIG_MACH_GEIM) \
-						 || defined(CONFIG_MACH_JENA)
+#if defined(CONFIG_MACH_TREBON)
 	if (dump_enable_flag != 0)
 		sec_check_crash_key(button->code, state);
 #endif

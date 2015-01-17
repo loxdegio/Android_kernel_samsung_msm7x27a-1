@@ -33,7 +33,7 @@ void backlight_ic_set_brightness(int level);
 /*  BACKLIGHT Control GPIO */
 #define GPIO_BL_CTRL	32
 
-#if defined(CONFIG_MACH_JENA)
+#if defined(CONFIG_MACH_TREBON)
 #define MAX_BRIGHTNESS_VALUE	255
 #define MIN_BRIGHTNESS_VALUE	30
 #define AAT_DIMMING_VALUE	    31

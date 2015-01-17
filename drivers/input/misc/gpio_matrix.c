@@ -160,8 +160,7 @@ static void report_key(struct gpio_kp *kp, int key_index, int out, int in)
 
 			input_report_key(kp->input_devs->dev[dev], keycode, pressed);
 
-#if defined(CONFIG_MACH_TREBON) || defined(CONFIG_MACH_GEIM) \
-						|| defined(CONFIG_MACH_JENA)
+#if defined(CONFIG_MACH_TREBON)
 			if (dump_enable_flag != 0)
 				sec_check_crash_key(keycode, pressed);
 #endif
